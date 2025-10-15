@@ -1,36 +1,12 @@
-import { useState } from "react";
 import GifList from "./gifs/components/GifList";
 import PreviousSearches from "./gifs/components/PreviousSearches";
-// import { mockGifs } from "./mock-data/gifs.mock";
 import CustomHeader from "./shared/components/CustomHeader";
 import SearchBar from "./shared/components/SearchBar";
-import { getGifsByQuery } from "./gifs/actions/get-gifs-by-query.actions";
-import type { Gif } from "./gifs/interfaces/gif.interface";
+import useGifs from "./gifs/hooks/useGifs";
 
 
 export default function GifsApp() {
-    const [previousTerms, setPreviousTerms] = useState<string[]>(['vegeta', 'saitama', 'genos', 'goku']);
-
-    const [gifsReponse, setGifsReponse] = useState<Gif[]>([]);
-
-
-    async function handleSearch(query: string) {
-        const cleanQuery = query.toLocaleLowerCase().trim();
-
-        if (cleanQuery === '') return;
-
-        if (previousTerms.includes(cleanQuery)) return;
-
-        setPreviousTerms([query, ...previousTerms.slice(0, 6)]);
-
-        const gifs = await getGifsByQuery(query);
-        console.log({ gifs });
-        setGifsReponse(gifs);
-    }
-
-    function handleTermClicked(term: string) {
-        console.log({ term });
-    }
+    const { gifsReponse, previousTerms, handleSearch, handleTermClicked } = useGifs()
 
 
     return (
