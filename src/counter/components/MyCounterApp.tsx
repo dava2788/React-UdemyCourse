@@ -4,7 +4,7 @@ import useCounter from "../hooks/useCounter";
 
 
 export default function MyCounterApp() {
-    const { counter, handleAdd, handleSubstract, handleReset } = useCounter(0);
+    const { counter, handleAdd, handleSubstract, handleReset } = useCounter(10);
 
     return (
         <div style={{

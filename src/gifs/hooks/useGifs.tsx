@@ -21,7 +21,7 @@ export default function useGifs() {
 
         if (previousTerms.includes(cleanQuery)) return;
 
-        setPreviousTerms([cleanQuery, ...previousTerms.slice(0, 6)]);
+        setPreviousTerms([cleanQuery, ...previousTerms.slice(0, 7)]);
 
         const gifs = await getGifsByQuery(query);
         // console.log({ gifs });
@@ -40,6 +40,9 @@ export default function useGifs() {
 
         const gifs = await getGifsByQuery(term);
         setGifsReponse(gifs);
+
+        //Set Cache
+        gifsCache.current[term] = gifs;
     }
 
     return {

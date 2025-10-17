@@ -5,22 +5,33 @@ import { giphyAPI } from '../api/giphy.api';
 
 export async function getGifsByQuery(query: string): Promise<Gif[]> {
 
-    const response = await giphyAPI<GiphyResponse>('/search', {
-        params: {
-            q: query,
-            limit: 10
-        }
-    });
+    //SI query viene vacio retorna un arreglo vacio
+    if (query.trim().length === 0) return [];
 
-    // console.log(response.data);
+    try {
+        const response = await giphyAPI<GiphyResponse>('/search', {
+            params: {
+                q: query,
+                limit: 10
+            }
+        });
 
-    return response.data.data.map((gif) => ({
-        id: gif.id,
-        title: gif.title,
-        url: gif.images.original.url,
-        width: Number(gif.images.original.width),
-        height: Number(gif.images.original.height),
-    }))
+        return response.data.data.map((gif) => ({
+            id: gif.id,
+            title: gif.title,
+            url: gif.images.original.url,
+            width: Number(gif.images.original.width),
+            height: Number(gif.images.original.height),
+        }));
+
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+
+
+
+
 
 
 }
